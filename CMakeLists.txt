@@ -55,7 +55,4 @@ Add_Subdirectory(src)
 # Tell CMake to create the ChobbyLauncher executable
 add_executable(ChobbyLauncher ${launcherSources})
 
-
-# Use the Widgets module from Qt 5.
-#target_link_libraries(ChobbyLauncher pr-downloader_static)
 target_link_libraries(ChobbyLauncher Qt5::Widgets pr-downloader_static)
