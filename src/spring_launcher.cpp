@@ -1,15 +1,20 @@
 #include "spring_launcher.h"
 
+#include <QProcess>
+
 SpringLauncher::SpringLauncher(QObject *parent) : QObject(parent)
 {
 }
 
-void SpringLauncher::Start()
+void SpringLauncher::Start(const QString& program, const QStringList& args)
 {
-    QString program = "./path/to/Qt/examples/widgets/analogclock";
-    QStringList arguments;
-    arguments << "-style" << "fusion";
-    QProcess *myProcess = new QProcess(parent);
-    myProcess->start(program, arguments);
+    myProcess = new QProcess(this);
+    connect(myProcess,  static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
+            this,       &SpringLauncher::Finished);
+    myProcess->start(program, args);
+}
+
+void SpringLauncher::Finished(int exitCode, QProcess::ExitStatus exitStatus)
+{
     emit lobbyClosed();
 }

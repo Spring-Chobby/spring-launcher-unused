@@ -4,6 +4,7 @@
 #include "chobby_config.h"
 
 #include <QAbstractButton>
+#include <QDir>
 
 #include <stdio.h>
 
@@ -43,6 +44,10 @@ Launcher::Launcher(QWidget *parent) :
     springDownloader->moveToThread(&workerThread);
     workerThread.start();
 
+    springLauncher = new SpringLauncher();
+    connect(springLauncher,  &SpringLauncher::lobbyClosed,
+            this,            &Launcher::OnLobbyClosed);
+
     currentStep = Step::START;
     NextStep();
 }
@@ -61,11 +66,14 @@ void Launcher::NextStep() {
     switch (currentStep) {
         case Step::START:
             SetStep(Step::AUTOUPDATE);
+            ui->btnAction->setText("Auto-update");
+            ui->btnAction->setEnabled(false);
             NextStep();
         break;
 
         case Step::AUTOUPDATE:
             SetStep(Step::PACKAGES);
+            ui->btnAction->setText("Download");
 
             if (!games.empty()) {
                 QString game = games.front();
@@ -77,8 +85,13 @@ void Launcher::NextStep() {
                 maps.removeFirst();
             } else if (!engines.empty()) {
                 QString engine = engines.front();
-                DownloadEngine(engine);
                 engines.removeFirst();
+                if (!QDir(springDownloader->FOLDER_PATH + "/engine/" + engine).exists()) {
+                    DownloadEngine(engine);
+                } else {
+                    printf("Engine %s already exists.\n", engine.toStdString().c_str());
+                    NextStep();
+                }
             } else {
                 if (!chobbyConfig->auto_start) {
                     ui->btnAction->setEnabled(true);
@@ -90,7 +103,14 @@ void Launcher::NextStep() {
 
         case Step::PACKAGES:
             SetStep(Step::LAUNCH);
-            NextStep();
+            ui->btnAction->setText("Launch");
+            QString program = springDownloader->FOLDER_PATH + "/engine/" + chobbyConfig->engines.front() + "/" + springLauncher->SPRING_EXE;
+            QStringList arguments;
+            for (const QString& arg : chobbyConfig->start_args) {
+                arguments << arg;
+            }
+            springLauncher->Start(program, arguments);
+            this->hide();
         break;
     }
 }
@@ -122,7 +142,7 @@ void Launcher::OnDownloadProgress(int current, int total)
 
 void Launcher::OnLobbyClosed()
 {
-    //sys.exit(0)
+    QApplication::quit();
 }
 
 void Launcher::OnBtnActionClicked()

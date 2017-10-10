@@ -5,6 +5,7 @@
 #include <QThread>
 
 #include "spring_downloader.h"
+#include "spring_launcher.h"
 
 namespace Ui {
 class Launcher;
@@ -44,6 +45,8 @@ private:
     void SetStep(const Step& step);
     Step currentStep;
     void NextStep();
+
+    SpringLauncher* springLauncher;
 };
 
 #endif // LAUNCHER_H
