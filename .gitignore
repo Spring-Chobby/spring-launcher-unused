@@ -30,3 +30,14 @@
 *.exe
 *.out
 *.app
+
+# Cmake generated files
+CMakeCache.txt
+CMakeFiles
+cmake_install.cmake
+Makefile
+
+# QT5 generated
+moc_*.cpp
+ui_launcher.h
+ChobbyLauncher_automoc.cpp

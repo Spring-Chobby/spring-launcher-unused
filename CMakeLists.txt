@@ -5,8 +5,22 @@ project(ChobbyLauncher)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_REQUIRED TRUE)
 
-set(CMAKE_AUTOUIC ON)
+set(BINDIR  "bin"                CACHE STRING "Where to install binaries")
+set(LIBDIR  "lib"                CACHE STRING "Where to install libraries")
 
+# pr-downloader
+If (NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/pr-downloader/CMakeLists.txt")
+    MESSAGE(FATAL_ERROR "${CMAKE_CURRENT_SOURCE_DIR}/pr-downloader/ is missing, please run\n git submodule init && git submodule update")
+EndIf()
+find_package(CURL REQUIRED)
+set(CMAKE_BUILD_TYPE "RELEASE")
+set(CLEAR_COMPILER_FLAGS true)
+set(PRD_BINDIR ${BINDIR} CACHE PATH "" FORCE)
+set(PRD_LIBDIR ${LIBDIR} CACHE PATH "" FORCE)
+Add_Subdirectory(pr-downloader)
+
+#QT5
+set(CMAKE_AUTOUIC ON)
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run moc automatically when needed.
@@ -40,20 +54,6 @@ find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 Add_Subdirectory(src)
 # Tell CMake to create the ChobbyLauncher executable
 add_executable(ChobbyLauncher ${launcherSources})
-
-set(BINDIR  "bin"                CACHE STRING "Where to install binaries")
-set(LIBDIR  "lib"                CACHE STRING "Where to install libraries")
-
-# pr-downloader
-If (NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/pr-downloader/CMakeLists.txt")
-    MESSAGE(FATAL_ERROR "${CMAKE_CURRENT_SOURCE_DIR}/pr-downloader/ is missing, please run\n git submodule init && git submodule update")
-EndIf()
-find_package(CURL REQUIRED)
-set(CMAKE_BUILD_TYPE "RELEASE")
-set(CLEAR_COMPILER_FLAGS true)
-set(PRD_BINDIR ${BINDIR} CACHE PATH "" FORCE)
-set(PRD_LIBDIR ${LIBDIR} CACHE PATH "" FORCE)
-Add_Subdirectory(pr-downloader)
 
 
 # Use the Widgets module from Qt 5.
