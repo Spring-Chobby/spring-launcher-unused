@@ -8,7 +8,7 @@ class SpringDownloader : public QObject
     Q_OBJECT
 
 public:
-    explicit SpringDownloader(QObject *parent = 0);
+    explicit SpringDownloader(const QString& dataFolder, QObject *parent = 0);
 
     int DownloadEngine(const QString& ver_string);
     int DownloadGame(const QString& name);

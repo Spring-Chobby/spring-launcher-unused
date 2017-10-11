@@ -18,6 +18,7 @@ public:
     bool no_downloads;
 
     QString game_title;
+    QString data_folder;
 
     QList<QString> games;
     QList<QString> maps;

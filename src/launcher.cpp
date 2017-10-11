@@ -24,7 +24,7 @@ Launcher::Launcher(QWidget *parent) :
     maps = chobbyConfig->maps;
     engines = chobbyConfig->engines;
 
-    springDownloader = new SpringDownloader();
+    springDownloader = new SpringDownloader(chobbyConfig->data_folder);
     connect(springDownloader,  &SpringDownloader::downloadStarted,
             this,              &Launcher::OnDownloadStarted);
     connect(springDownloader,  &SpringDownloader::downloadFinished,

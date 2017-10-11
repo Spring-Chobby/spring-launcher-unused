@@ -36,6 +36,7 @@ ChobbyConfig::ChobbyConfig(const std::string& fpath)
     no_downloads = configObj["no_downloads"].toBool();
 
     game_title = configObj["game_title"].toString();
+    data_folder = configObj["data_folder"].toString();
 
     games = ParseJsonArray(configObj, "games");
     maps = ParseJsonArray(configObj, "maps");
@@ -48,7 +49,7 @@ void ChobbyConfig::initialize()
     if (chobbyConfig != nullptr) {
         throw "already initialized";
     }
-    //chobbyConfig = new ChobbyConfig(":/config/config.json");
-    chobbyConfig = new ChobbyConfig("res/config.json");
+    chobbyConfig = new ChobbyConfig(":/config/config.json");
+    //chobbyConfig = new ChobbyConfig("res/config.json");
     printf("initialized\n");
 }

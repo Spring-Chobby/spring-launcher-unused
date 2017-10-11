@@ -25,6 +25,8 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
+# Resource files
+set(CMAKE_AUTORCC ON)
 
 
 #Static start
@@ -53,6 +55,6 @@ find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 
 Add_Subdirectory(src)
 # Tell CMake to create the ChobbyLauncher executable
-add_executable(ChobbyLauncher ${launcherSources})
+add_executable(spring-launcher ${launcherSources} "${CMAKE_CURRENT_SOURCE_DIR}/res/resources.qrc")
 
 target_link_libraries(ChobbyLauncher Qt5::Widgets pr-downloader_static)

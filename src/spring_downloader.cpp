@@ -10,9 +10,10 @@ void UpdateProgress(int done, int size) {
     emit springDownloader->downloadProgress(done, size);
 }
 
-SpringDownloader::SpringDownloader(QObject *parent) :
-    QObject(parent), FOLDER_PATH(QDir::currentPath() + "/data")
+SpringDownloader::SpringDownloader(const QString& dataFolder, QObject *parent) :
+    QObject(parent), FOLDER_PATH(QDir::currentPath() + "/" + dataFolder + "/")
 {
+    FOLDER_PATH = QDir::cleanPath(FOLDER_PATH);
     MaybeMakeFolder();
     DownloadSetConfig(CONFIG_FILESYSTEM_WRITEPATH, FOLDER_PATH.toStdString().c_str());
     SetDownloadListener(UpdateProgress);
