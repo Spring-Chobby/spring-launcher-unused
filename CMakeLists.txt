@@ -8,6 +8,7 @@ set(CMAKE_CXX_REQUIRED TRUE)
 set(BINDIR  "bin"                CACHE STRING "Where to install binaries")
 set(LIBDIR  "lib"                CACHE STRING "Where to install libraries")
 
+Set(LD_FLAGS "-static-libstdc++ -static-libgcc -lpthread --static")
 # pr-downloader
 If (NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/pr-downloader/CMakeLists.txt")
     MESSAGE(FATAL_ERROR "${CMAKE_CURRENT_SOURCE_DIR}/pr-downloader/ is missing, please run\n git submodule init && git submodule update")
@@ -28,6 +29,7 @@ set(CMAKE_AUTOMOC ON)
 # Resource files
 set(CMAKE_AUTORCC ON)
 
+message("MODULE PATH: ${CMAKE_MODULE_PATH}")
 
 #Static start
 #set_target_properties(ChobbyLauncher PROPERTIES LINK_SEARCH_START_STATIC 1)
@@ -43,7 +45,7 @@ endif (WIN32 OR MINGW)
 #SET_TARGET_PROPERTIES(Qt5::Widgets PROPERTIES IMPORTED_LOCATION /usr/lib/libboost_unit_test_framework.a)
 #TARGET_LINK_LIBRARIES(mytarget A boost_unit_test_framework C)
 #Set Linker flags
-Set(LD_FLAGS "-static-libstdc++ -static-libgcc")
+Set(LD_FLAGS "-static-libstdc++ -static-libgcc -lpthread --static")
 Set(CMAKE_EXE_LINKER_FLAGS    "${CMAKE_EXE_LINKER_FLAGS}    ${LD_FLAGS}")
 Set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${LD_FLAGS}")
 
@@ -57,4 +59,5 @@ Add_Subdirectory(src)
 # Tell CMake to create the ChobbyLauncher executable
 add_executable(spring-launcher ${launcherSources} "${CMAKE_CURRENT_SOURCE_DIR}/res/resources.qrc")
 
-target_link_libraries(ChobbyLauncher Qt5::Widgets pr-downloader_static)
+#target_include_directories(ChobbyLauncher PUBLIC /mnt/big/work/qt5/qt-everywhere-opensource-src-5.9.2/qtbase-build/include)
+target_link_libraries(spring-launcher Qt5::Widgets pr-downloader_static curl)

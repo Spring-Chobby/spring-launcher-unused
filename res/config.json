@@ -15,6 +15,7 @@
 	"auto_start" : true,
     "no_downloads" : false,
 
+    "data_folder" : "springboard-data",
 	"game_title": "SpringBoard",
     "start_args" : ["--game", "rapid://sbc:test", "--map", "Obsidian_1.5"]
 }
