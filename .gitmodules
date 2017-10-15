@@ -1,3 +1,9 @@
 [submodule "pr-downloader"]
 	path = pr-downloader
 	url = https://github.com/spring/pr-downloader.git
+[submodule "glfw3/pr-downloader"]
+	path = glfw3/pr-downloader
+	url = https://github.com/spring/pr-downloader.git
+[submodule "glfw3/nanogui"]
+	path = glfw3/nanogui
+	url = https://github.com/wjakob/nanogui.git

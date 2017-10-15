@@ -1,0 +1,20 @@
+{
+    "server" : {
+            "address" : "springrts.com",
+            "port" : 8200,
+            "serverName" : "Spring",
+            "protocol" : "spring"
+    },
+    "game" : "generic",
+
+    "games" : ["sbc:test", "ba:test", "sb-ba:test"],
+    "maps" : ["Obsidian_1.5"],
+    "engines" : [ "103.0.1-1222-g37dc534 develop" ],
+
+	"auto_download" : true,
+	"auto_start" : true,
+    "no_downloads" : false,
+
+	"game_title": "SpringBoard: BA",
+    "start_args" : ["--game", "rapid://sb-ba:test", "--map", "Obsidian_1.5"]
+}

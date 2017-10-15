@@ -1,0 +1,20 @@
+{
+    "server" : {
+            "address" : "springrts.com",
+            "port" : 8200,
+            "serverName" : "Spring",
+            "protocol" : "spring"
+    },
+    "game" : "generic",
+
+    "games" : ["ba:test", "chobby:test"],
+    "maps" : [],
+    "engines" : [ "103.0.1-1222-g37dc534 develop" ],
+
+	"auto_download" : true,
+	"auto_start" : true,
+    "no_downloads" : false,
+
+	"game_title": "Balanced Annihilation",
+    "start_args" : ["--menu", "rapid://chobby:test"]
+}
